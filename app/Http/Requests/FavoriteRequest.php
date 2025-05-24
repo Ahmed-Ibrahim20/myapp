@@ -27,14 +27,14 @@ class FavoriteRequest extends FormRequest
         $favoriteId = $this->route('favorite');
 
         $commonRules = [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'product_id' => 'required|exists:products,id'
         ];
 
         if ($this->method() === 'POST') {
             $postRules = [
                 'user_id' => [
-                    'required',
+                    'nullable',
                     'exists:users,id',
                     Rule::unique('favorites')->where(function ($query) {
                         return $query->where('product_id', $this->product_id);
@@ -48,7 +48,7 @@ class FavoriteRequest extends FormRequest
         if ($this->method() === 'PATCH' || $this->method() === 'PUT') {
             $updateRules = [
                 'user_id' => [
-                    'required',
+                    'nullable',
                     'exists:users,id',
                     Rule::unique('favorites')
                         ->where(function ($query) {
@@ -60,7 +60,6 @@ class FavoriteRequest extends FormRequest
             ];
             return array_merge($commonRules, $updateRules);
         }
-
         return [];
     }
 

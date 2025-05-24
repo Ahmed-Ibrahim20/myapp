@@ -12,8 +12,8 @@ class Product extends Model
 
     // تعريف أنواع المنتجات كثوابت
     const TYPE_DEFAULT = 0;
-    const TYPE_KG = 1;
-    const TYPE_UNIT = 2;
+    const TYPE_KG = 0;
+    const TYPE_UNIT = 1;
 
     /**
      * الحقول التي يمكن تعبئتها جماعياً
@@ -75,19 +75,7 @@ class Product extends Model
         return $this->belongsTo(Category::class)->withDefault();
     }
 
-    /**
-     * Accessor لمسار الصورة الكامل
-     * 
-     * @return string
-     */
-    public function getImageUrlAttribute(): string
-    {
-        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
-            return $this->image;
-        }
-        
-        return $this->image ? asset('storage/products/' . $this->image) : asset('images/default-product.png');
-    }
+
 
     /**
      * Accessor لاسم نوع المنتج

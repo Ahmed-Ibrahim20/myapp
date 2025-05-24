@@ -24,8 +24,8 @@ class UserService
     {
         return $this->model->when($searchUser, function ($query) use ($searchUser) {
             $query->where('name', 'like', "%{$searchUser}%")
-                  ->orWhere('email', 'like', "%{$searchUser}%")
-                  ->orWhere('phone', 'like', "%{$searchUser}%");
+                ->orWhere('email', 'like', "%{$searchUser}%")
+                ->orWhere('phone', 'like', "%{$searchUser}%");
         })->paginate($perPageUser);
     }
 
@@ -92,16 +92,13 @@ class UserService
                 'name',
                 'email',
                 'phone',
-                'password',
                 'address',
                 'role',
-                'user_add_id',
             ]);
 
-            if (!empty($data['password'])) {
-                $data['password'] = Hash::make($data['password']);
-            } else {
-                unset($data['password']);
+            // إضافة كلمة السر فقط لو موجودة ومدخولة
+            if (!empty($requestData['password'])) {
+                $data['password'] = Hash::make($requestData['password']);
             }
 
             $user->update($data);
@@ -113,10 +110,9 @@ class UserService
             ];
         } catch (\Exception $e) {
             Log::error('User update failed: ' . $e->getMessage());
-
             return [
                 'status' => false,
-                'message' => 'حدث خطأ أثناء تحديث المستخدم'
+                'message' => 'حدث خطأ أثناء التحديث: ' 
             ];
         }
     }

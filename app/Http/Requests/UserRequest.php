@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('user');
+        $userId = $this->route('user') ;
 
         $commonRules = [
             'name' => 'required|string|max:100',
@@ -34,37 +34,29 @@ class UserRequest extends FormRequest
                 'string',
                 'email',
                 'max:150',
-                Rule::unique('users')->ignore($userId)
+                Rule::unique('users')->ignore($userId),
             ],
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
-            'user_add_id' => 'nullable|exists:users,id',
+            'user_add_id' => 'nullable|exists:userS,id',
             'role' => 'nullable|integer|between:0,2',
         ];
 
-        if ($this->method() === 'POST') {
-            $postRules = [
+        if ($this->isMethod('POST')) {
+            return array_merge($commonRules, [
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'email' => [
-                    'required',
-                    'string',
-                    'email',
-                    'max:150',
-                    'unique:users'
-                ],
-            ];
-            return array_merge($commonRules, $postRules);
+            ]);
         }
 
-        if ($this->method() === 'PATCH' || $this->method() === 'PUT') {
-            $updateRules = [
+        if ($this->isMethod('PATCH') || $this->isMethod('PUT')) {
+            return array_merge($commonRules, [
                 'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
-            ];
-            return array_merge($commonRules, $updateRules);
+            ]);
         }
 
         return [];
     }
+
 
     /**
      * Custom validation error messages.

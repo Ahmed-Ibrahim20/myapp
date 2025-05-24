@@ -22,6 +22,7 @@
             'password',
             'address',
             'role',
+            'user_add_id'
         ];
 
         /**

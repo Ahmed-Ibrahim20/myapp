@@ -29,7 +29,7 @@ class CategoryRequest extends FormRequest
         $commonRules = [
             'name' => 'required|string|max:255',
             'note' => 'nullable|string',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable',
             'user_add_id' => 'nullable|exists:users,id'
         ];
 

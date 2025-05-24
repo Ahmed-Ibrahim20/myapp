@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
             'price' => 'required|numeric|min:0|max:99999999.99',
             'quantity' => 'required|integer|min:0',
             'type' => 'required|integer|in:0,1,2',
-            'image' => 'required|string|max:255',
+            'image' => 'nullable',
             'user_add_id' => 'nullable|exists:users,id',
             'category_id' => 'nullable|exists:categories,id'
         ];

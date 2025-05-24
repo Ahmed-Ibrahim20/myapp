@@ -58,4 +58,19 @@ class Category extends Model
     {
         return $this->belongsTo(User::class, 'user_add_id');
     }
+
+    /**
+     * Accessor لمسار الصورة الكامل
+     *
+     * @return string|null
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return asset('images/default-category.png');
+        }
+    
+        return url(asset($this->image)) ;
+    }
+    
 }

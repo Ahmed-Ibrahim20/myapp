@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->default(0);
             $table->integer('quantity')->default(0);
-            $table->tinyInteger('type')->default(0)->comment('0: , 1: kg, 2:unit ');
+            $table->tinyInteger('type')->default(0)->comment('0:kg ,1:unit ');
             $table->string('image');
             $table->unsignedBigInteger('user_add_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
