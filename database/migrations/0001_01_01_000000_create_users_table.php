@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('phone', 20)->nullable();
             $table->string('password');
             $table->text('address')->nullable();
-            $table->tinyInteger('role')->default(0)->comment('0: customer, 1: customer, 2:admin ');
+            $table->tinyInteger('role')->default(0)->comment('0: customer, 1:admin ');
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedBigInteger('user_add_id')->nullable();
             $table->rememberToken();
